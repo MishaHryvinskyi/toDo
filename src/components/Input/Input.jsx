@@ -1,8 +1,13 @@
 import { InputStyled } from "./Input";
 
-const Input = ({ name }) => {
+const Input = ({ name, value, onChange }) => {
     return (
-        <InputStyled type="text" placeholder={name}/>
+        <InputStyled 
+      type="text" 
+      placeholder={name}
+      value={value} 
+      onChange={onChange} 
+    />
     )
 }
 

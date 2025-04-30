@@ -1,16 +1,16 @@
-import { NotItems } from "./List";
+import { NotItems, ListStyled, ListItem } from "./List";
 
 const List = ({ data }) => {
     return (
         data ? (
-        <ul>
+        <ListStyled>
             {data.map(({ nameItem, descr, id }) => 
-            <li key={id}>
+            <ListItem key={id}>
                 <h2>{nameItem}</h2>
                 <p>{descr}</p>    
-            </li>
+            </ListItem>
             )}
-        </ul>
+        </ListStyled>
         ) : (
             <NotItems>Немає жодних справ 👨‍👨‍👦</NotItems>
         )

@@ -5,3 +5,14 @@ export const getToDoData = async () => {
     const result = await response.json()
     return result;
 }
+
+export const postToDoData = async (newItem) => {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newItem),
+    });
+    return await response.json();
+  };

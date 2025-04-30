@@ -7,7 +7,7 @@ export const InputStyled = styled.input`
     padding: 10px 20px;
     margin: 20px auto;
 
-    background-color: skyblue;
+    background-color: #9fd3c7; 
     color: white;
     border: none;
     border-radius: 8px;
@@ -23,7 +23,7 @@ export const InputStyled = styled.input`
     }
 
     &::placeholder {
-        color: white;
+        color: #142d4c; 
         font-weight: 400;
     }
 `;
