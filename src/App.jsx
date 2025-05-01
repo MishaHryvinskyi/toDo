@@ -1,24 +1,25 @@
 import Input from './components/Input/Input.jsx'
 import Title from './components/Title/Title.jsx'
 import Button from './components/Button/Button.jsx'
+import List from './components/List/List.jsx'
 import { Container } from './App.js'
 import './App.js'
-import List from './components/List/List.jsx'
+
+import { toast, ToastContainer } from 'react-toastify'
 import { getToDoData, postToDoData } from './API/api.js'
 
 import { useEffect, useState } from 'react'
 
-
 const App = () => {
   const [todoName, setTodoName] = useState('');
   const [todoDescr, setTodoDescr] = useState('');
-  const [data, setData] = useState([]);
+  const [dataTasks, setDataTasks] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const todos = await getToDoData();
-        setData(todos)
+        setDataTasks(todos)
       } catch (error) {
         console.log('Помилка', error);
       }
@@ -27,30 +28,41 @@ const App = () => {
     fetchData()
   }, []);
 
-  const handleTodoDescr = e => {
-    setTodoDescr(e.currentTarget.value)
-  }
-
-  const handleTodoName = e => {
-    setTodoName(e.currentTarget.value)
+  const handleChange = e => {
+    const nameInput = e.target.value;
+    switch(e.target.name) {
+      case "head":
+        setTodoName(nameInput);
+        break;
+      case "descr":
+        setTodoDescr(nameInput);
+        break;
+      default :
+      return;
+    }
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // зупиняє перезавантаження сторінки
+    e.preventDefault(); 
 
-    if (!todoName.trim() || !todoDescr.trim()) {
-      alert('Будь ласка, заповніть всі поля');
-      return;
-    }
-
-    const newItem = {
+    const taskData = {
       nameItem: todoName,
-      descr: todoDescr,
+      descr: todoDescr || "Імпровізуємо)",
     };
   
     try {
-      const createdItem = await postToDoData(newItem);
-      setData(prev => [...prev, createdItem]); // оновити список
+
+      if(!taskData.nameItem) {
+        toast.error(`Поле ${taskData.nameItem} не може бути пустим!`);
+        return;
+      }
+
+      if(taskData) {
+        toast.success(`Завдання ${taskData.nameItem} успішно додано до списку!)`)
+      }
+
+      const createdItem = await postToDoData(taskData);
+      setDataTasks(prev => [...prev, createdItem]); 
       setTodoName('');
       setTodoDescr('');
     } catch (error) {
@@ -63,20 +75,23 @@ const App = () => {
   <Title title='ДАЙ БОЖЕ ВАМ ЗДОРОВЛЯ'/>
   <form onSubmit={handleSubmit}>
   <Input
-      name="Введіть текст"
+      name="head"
+      text="Введіть текст"
       value={todoName}
-      onChange={handleTodoName}
+      onChange={handleChange}
   />
 
   <Input
-      name="Введіть опис"
+      name="descr"
+      text="Введіть опис"
       value={todoDescr}
-      onChange={handleTodoDescr}
+      onChange={handleChange}
   />
   <Button type="submit">Створити</Button>
   </form>
     <Title title='Список справ'/>
-    <List data={data}/>
+    <List dataTasks={dataTasks} setDataTasks={setDataTasks} />
+    <ToastContainer/>
     </Container>
   )
 }

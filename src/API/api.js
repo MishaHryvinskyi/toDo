@@ -1,18 +1,18 @@
+import axios from "axios";
+
 const API_URL = 'https://681224243ac96f7119a7002b.mockapi.io/toDo';
 
 export const getToDoData = async () => {
-    const response = await fetch(`${API_URL}`);
-    const result = await response.json()
-    return result;
+  const allTasks = await axios.get(API_URL);
+  return allTasks.data;
 }
 
 export const postToDoData = async (newItem) => {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newItem),
-    });
-    return await response.json();
-  };
+  const newTask = await axios.post(API_URL, newItem);
+  return newTask.data;
+};
+
+export const deleteToDoData = async (idRemove) => {
+ const deleteTask = await axios.delete(`${API_URL}/${idRemove}`);
+ return deleteTask.data;
+}
