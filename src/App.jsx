@@ -1,7 +1,6 @@
-import Input from './components/Input/Input.jsx'
 import Title from './components/Title/Title.jsx'
-import Button from './components/Button/Button.jsx'
 import List from './components/List/List.jsx'
+import Form from './components/Form/Form.jsx'
 import { Container } from './App.js'
 import './App.js'
 
@@ -72,25 +71,18 @@ const App = () => {
 
   return (
     <Container>
-  <Title title='ДАЙ БОЖЕ ВАМ ЗДОРОВЛЯ'/>
-  <form onSubmit={handleSubmit}>
-  <Input
-      name="head"
-      text="Введіть текст"
-      value={todoName}
-      onChange={handleChange}
-  />
-
-  <Input
-      name="descr"
-      text="Введіть опис"
-      value={todoDescr}
-      onChange={handleChange}
-  />
-  <Button type="submit">Створити</Button>
-  </form>
+    <Title title='ДАЙ БОЖЕ ВАМ ЗДОРОВЛЯ'/>
+    <Form 
+      handleChange={handleChange}
+      handleSubmit={handleSubmit} 
+      todoName={todoName} 
+      todoDescr={todoDescr} 
+    />
     <Title title='Список справ'/>
-    <List dataTasks={dataTasks} setDataTasks={setDataTasks} />
+    <List 
+      dataTasks={dataTasks} 
+      setDataTasks={setDataTasks} 
+    />
     <ToastContainer/>
     </Container>
   )
